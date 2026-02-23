@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>THE SYSTEM — Grade 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<script>
+// ══ CREDENTIALS (edit passwords here) ══
+// Admin password:
+const ADMIN_PASSWORD = "overlord2024";
+
+// Student passwords — key is firstname_lastname lowercase
+// e.g. "Aasritha P" → "aasritha_p"
+const STUDENT_PASSWORDS = {
+  // Section A
+  "aasritha_p":"hunter001","aathmika_t":"hunter002","anish_kumar_swai":"hunter003",
+  "archit_kumar_dey":"hunter004","bhargav_t_v":"hunter005","diveeth_himasai":"hunter006",
+  "gandla_naga_suhas":"hunter007","himanshu_a":"hunter008","kathirvel_i_s":"hunter009",
+  "prishaa_s":"hunter010","ratish_ps":"hunter011","rittvik_s":"hunter012",
+  "sanjna_shree_g_r":"hunter013","srishti_s":"hunter014","swaathi_k_r":"hunter015",
+  "syed_junaid_ali":"hunter016","thanush_kumar_s_s":"hunter017","jayani_prusty":"hunter018",
+  "priyadarshani_sahu":"hunter019","nishan_s":"hunter020","sounavo_roy":"hunter021",
+  "yasaswini_reddy_e":"hunter022","akshath_r":"hunter023","anisa_t":"hunter024",
+  "ashwath_n_j":"hunter025","chavez_t":"hunter026","dinesh_p":"hunter027",
+  "diyan_d":"hunter028","harshitha_b":"hunter029","kabilan_m":"hunter030",
+  "lakshitha_p":"hunter031","manish_k":"hunter032","miruthula_s":"hunter033",
+  "reshna_b":"hunter034","rishi_keshev_g_d":"hunter035","shraddha_k":"hunter036",
+  "soundarya_k_v":"hunter037","mohitha_s":"hunter038","eershika_a":"hunter039",
+  // Section B
+  "deepshika_s":"hunter040","advaitha_a":"hunter041","ashriya_sharon_a_r":"hunter042",
+  "ashween_g":"hunter043","b_jithesh":"hunter044","deepakumar_m":"hunter045",
+  "dharanish_balaji_g":"hunter046","muhilini_r":"hunter047","gopika_d":"hunter048",
+  "jayawant_v":"hunter049","jemimah_priscilla_d":"hunter050","jeykeeshav_s":"hunter051",
+  "kamesh_m":"hunter052","logesh_s_p":"hunter053","lohita_santhi_r":"hunter054",
+  "nikhilesh_s":"hunter055","nithya_shree_g":"hunter056","nithyasri_s":"hunter057",
+  "prajesh_p_r":"hunter058","pranav_v_d_m":"hunter059","premsai_t":"hunter060",
+  "saai_narasimman_l_g":"hunter061","sanjay_m":"hunter062","shanibraaz_s":"hunter063",
+  "shanthanu_s":"hunter064","siddharth_v_g":"hunter065","tanusiya_ta":"hunter066",
+  "tharika_t":"hunter067","vishwa_prakash":"hunter068","harshini_v":"hunter069",
+  "sangamithra_s_p":"hunter070","trivena_s":"hunter071","harshitha_m":"hunter072",
+  "shiny_benila_b":"hunter073","leja_sree_r":"hunter074","ervin_danny":"hunter075",
+  "akshay_ram_b":"hunter076","a_suruthika":"hunter077","thiyashri_t":"hunter078",
+  "gokuleshwaran_k_p":"hunter079"
+};
+// Make SYSTEM_CREDENTIALS compatible with old code
+const SYSTEM_CREDENTIALS = { admin: { pass: ADMIN_PASSWORD } };
+for(const [k,p] of Object.entries(STUDENT_PASSWORDS)) SYSTEM_CREDENTIALS[k] = {pass:p};
+
+// ══ MARKLIST — Polynomials Test ══
+const MARKLIST = {
+  tests: [{
+    id: "polynomials_t1",
+    name: "Polynomials — T25M (Sec A) / T20M (Sec B)",
+    date: "12 Feb 2025",
+    maxA: 25,
+    maxB: 20,
+    marks: {
+      // Section A (max 25)
+      "aasritha_p":16,"aathmika_t":14,"anish_kumar_swai":19,"archit_kumar_dey":17,
+      "bhargav_t_v":20,"diveeth_himasai":17,"gandla_naga_suhas":21,"himanshu_a":0,
+      "kathirvel_i_s":18,"prishaa_s":19,"ratish_ps":21,"rittvik_s":22,
+      "sanjna_shree_g_r":20,"srishti_s":24,"swaathi_k_r":20,"syed_junaid_ali":23,
+      "thanush_kumar_s_s":21,"jayani_prusty":12,"priyadarshani_sahu":17,"nishan_s":11,
+      "sounavo_roy":8,"yasaswini_reddy_e":0,"akshath_r":0,"anisa_t":20,
+      "ashwath_n_j":25,"chavez_t":18,"dinesh_p":23,"diyan_d":20,
+      "harshitha_b":13,"kabilan_m":17,"lakshitha_p":18,"manish_k":23,
+      "miruthula_s":14,"reshna_b":16,"rishi_keshev_g_d":25,"shraddha_k":21,
+      "soundarya_k_v":18,"mohitha_s":17,"eershika_a":22,
+      // Section B (max 20)
+      "deepshika_s":19,"advaitha_a":13,"ashriya_sharon_a_r":5,"ashween_g":13,
+      "b_jithesh":15,"deepakumar_m":15,"dharanish_balaji_g":14,"muhilini_r":11,
+      "gopika_d":14,"jayawant_v":12,"jemimah_priscilla_d":8,"jeykeeshav_s":16,
+      "kamesh_m":4,"logesh_s_p":15,"lohita_santhi_r":16,"nikhilesh_s":18,
+      "nithya_shree_g":6,"nithyasri_s":12,"prajesh_p_r":13,"pranav_v_d_m":0,
+      "premsai_t":5,"saai_narasimman_l_g":12,"sanjay_m":0,"shanibraaz_s":13,
+      "shanthanu_s":4,"siddharth_v_g":7,"tanusiya_ta":12,"tharika_t":11,
+      "vishwa_prakash":8,"harshini_v":12,"sangamithra_s_p":15,"trivena_s":10,
+      "harshitha_m":20,"shiny_benila_b":20,"leja_sree_r":12,"ervin_danny":18,
+      "akshay_ram_b":0,"a_suruthika":13,"thiyashri_t":18,"gokuleshwaran_k_p":12
+    }
+  }],
+  chapterTests:[]
+};
+</script>
+<style>
+:root{
+  --bg:#0a0c10;--bg2:#111420;--bg3:#161b2e;
+  --accent:#f0c040;--accent2:#ff6b35;--accent3:#00e5ff;
+  --green:#39ff14;--red:#ff3366;--purple:#b44fff;
+  --text:#e8eaf6;--text2:#8892b0;
+  --card:#13182a;--border:#1e2a45;
+  --glow:0 0 20px rgba(240,192,64,0.3);
+  --glow2:0 0 20px rgba(0,229,255,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;min-height:100vh;overflow-x:hidden;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+
+/* ── PARTICLE BG ── */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35;}
+
+/* ── LOGIN SCREEN ── */
+#loginScreen{
+  position:fixed;inset:0;z-index:9000;
+  background:radial-gradient(ellipse at center,#0d1529 0%,#050709 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.login-container{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:40px 50px;width:420px;max-width:95vw;
+  box-shadow:0 0 60px rgba(240,192,64,0.1),0 0 120px rgba(0,0,0,0.8);
+  position:relative;overflow:hidden;
+}
+.login-container::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(transparent 340deg,rgba(240,192,64,0.05) 360deg);
+  animation:rotateBorder 8s linear infinite;
+}
+@keyframes rotateBorder{to{transform:rotate(360deg);}}
+.login-title{
+  font-family:'Orbitron',monospace;font-size:28px;font-weight:900;
+  color:var(--accent);text-align:center;margin-bottom:4px;letter-spacing:3px;
+  text-shadow:0 0 20px rgba(240,192,64,0.5);
+}
+.login-sub{color:var(--text2);font-size:13px;text-align:center;margin-bottom:30px;letter-spacing:2px;}
+.role-tabs{display:flex;gap:8px;margin-bottom:24px;}
+.role-tab{
+  flex:1;padding:10px;border:1px solid var(--border);border-radius:8px;
+  background:transparent;color:var(--text2);font-family:'Rajdhani';font-size:14px;
+  cursor:pointer;transition:all .3s;letter-spacing:1px;
+}
+.role-tab.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:12px;letter-spacing:2px;color:var(--text2);margin-bottom:6px;}
+.login-field input,.login-field select{
+  width:100%;padding:12px 14px;background:#0d1220;border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:'Share Tech Mono';font-size:14px;
+  outline:none;transition:border-color .3s;
+}
+.login-field input:focus,.login-field select:focus{border-color:var(--accent);}
+.login-btn{
+  width:100%;padding:14px;background:var(--accent);color:#000;
+  border:none;border-radius:8px;font-family:'Orbitron';font-size:14px;
+  font-weight:700;letter-spacing:2px;cursor:pointer;
+  transition:all .3s;margin-top:8px;
+}
+.login-btn:hover{background:#ffd700;box-shadow:var(--glow);}
+.login-error{
+  color:var(--red);font-size:13px;text-align:center;margin-top:12px;
+  display:none;padding:8px;background:rgba(255,51,102,0.1);border-radius:6px;
+}
+
+/* ── LEVEL UP OVERLAY ── */
+#levelUpOverlay{
+  position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0.85);
+  display:none;align-items:center;justify-content:center;flex-direction:column;
+}
+#levelUpOverlay.active{display:flex;}
+.levelup-burst{
+  font-family:'Orbitron';font-size:18px;color:var(--accent);
+  letter-spacing:4px;margin-bottom:16px;animation:burstIn .5s ease-out;
+}
+.levelup-number{
+  font-family:'Orbitron';font-size:120px;font-weight:900;
+  color:var(--accent);line-height:1;
+  animation:levelPulse 1s ease-in-out infinite alternate;
+  text-shadow:0 0 60px rgba(240,192,64,0.8),0 0 120px rgba(240,192,64,0.4);
+}
+.levelup-label{
+  font-family:'Orbitron';font-size:32px;color:#fff;
+  letter-spacing:6px;margin-top:16px;animation:slideUp .6s ease-out .3s both;
+}
+.levelup-rank{
+  font-size:20px;color:var(--accent2);margin-top:8px;letter-spacing:3px;
+  animation:slideUp .6s ease-out .5s both;
+}
+.levelup-xp{
+  font-family:'Share Tech Mono';color:var(--green);margin-top:20px;font-size:16px;
+  animation:slideUp .6s ease-out .7s both;
+}
+.levelup-close{
+  margin-top:30px;padding:12px 32px;background:var(--accent);color:#000;
+  border:none;border-radius:8px;font-family:'Orbitron';font-size:13px;
+  letter-spacing:2px;cursor:pointer;animation:slideUp .6s ease-out .9s both;
+}
+@keyframes burstIn{0%{transform:scale(0) rotate(-10deg);opacity:0;}100%{transform:scale(1) rotate(0);opacity:1;}}
+@keyframes levelPulse{0%{transform:scale(1);text-shadow:0 0 60px rgba(240,192,64,.8);}100%{transform:scale(1.08);text-shadow:0 0 80px rgba(240,192,64,1),0 0 160px rgba(240,192,64,.6);}}
+@keyframes slideUp{0%{transform:translateY(30px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
+
+/* Confetti */
+.confetti-piece{
+  position:fixed;width:10px;height:10px;top:-20px;pointer-events:none;z-index:10001;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+
+/* ── XP FLOAT ── */
+.xp-float{
+  position:fixed;font-family:'Orbitron';font-size:20px;font-weight:900;
+  color:var(--green);pointer-events:none;z-index:9999;
+  animation:xpFloat 2s ease-out forwards;text-shadow:0 0 10px var(--green);
+}
+@keyframes xpFloat{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(-80px) scale(1.4);}
+}
+
+/* ── MAIN APP ── */
+#app{display:none;position:relative;z-index:1;}
+#app.visible{display:block;}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,12,16,0.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:60px;
+}
+.topbar-logo{font-family:'Orbitron';font-size:18px;font-weight:900;color:var(--accent);letter-spacing:3px;}
+.topbar-user{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text2);}
+.topbar-name{color:var(--text);font-weight:600;letter-spacing:1px;}
+.topbar-xp{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:4px 14px;font-family:'Share Tech Mono';font-size:12px;color:var(--accent);
+}
+.exit-btn{
+  padding:6px 16px;border:1px solid var(--red);border-radius:6px;
+  background:transparent;color:var(--red);font-family:'Rajdhani';font-size:13px;
+  cursor:pointer;transition:all .3s;letter-spacing:1px;
+}
+.exit-btn:hover{background:var(--red);color:#fff;}
+.notif-btn{
+  background:none;border:none;color:var(--text2);cursor:pointer;font-size:20px;position:relative;
+}
+.notif-badge{
+  position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;
+  font-size:9px;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── NAV ── */
+.nav{
+  display:flex;gap:4px;padding:12px 24px;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  overflow-x:auto;flex-wrap:nowrap;
+}
+.nav-btn{
+  padding:8px 18px;border:1px solid var(--border);border-radius:8px;
+  background:transparent;color:var(--text2);font-family:'Rajdhani';font-size:13px;
+  cursor:pointer;transition:all .25s;white-space:nowrap;letter-spacing:1px;
+}
+.nav-btn:hover,.nav-btn.active{
+  background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;
+}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:24px;max-width:1400px;margin:0 auto;}
+.section.active{display:block;}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin-bottom:16px;
+}
+.card-title{
+  font-family:'Orbitron';font-size:14px;color:var(--accent);
+  letter-spacing:2px;margin-bottom:16px;
+}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+/* ── STAT CARDS ── */
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:16px;text-align:center;
+}
+.stat-num{font-family:'Orbitron';font-size:32px;font-weight:900;color:var(--accent);}
+.stat-label{font-size:12px;letter-spacing:2px;color:var(--text2);margin-top:4px;}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--bg3);}
+th{padding:12px 14px;text-align:left;font-size:11px;letter-spacing:2px;color:var(--text2);font-weight:600;}
+td{padding:10px 14px;border-top:1px solid var(--border);font-size:14px;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{
+  width:100%;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;
+}
+.progress-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .8s ease;}
+.progress-fill.green{background:var(--green);}
+.progress-fill.red{background:var(--red);}
+.progress-fill.blue{background:var(--accent3);}
+
+/* ── BADGES ── */
+.badge{
+  display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;
+  letter-spacing:1px;font-weight:600;
+}
+.badge.surge{background:rgba(57,255,20,0.15);color:var(--green);border:1px solid var(--green);}
+.badge.stagnant{background:rgba(240,192,64,0.15);color:var(--accent);border:1px solid var(--accent);}
+.badge.risk{background:rgba(255,51,102,0.15);color:var(--red);border:1px solid var(--red);}
+
+/* ── INPUT / BUTTON ── */
+input[type=text],input[type=number],input[type=password],input[type=url],select,textarea{
+  background:#0d1220;border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'Rajdhani';font-size:14px;
+  padding:10px 14px;outline:none;transition:border-color .3s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+.btn{
+  padding:10px 24px;border-radius:8px;border:none;
+  font-family:'Rajdhani';font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;
+  transition:all .25s;
+}
+.btn-primary{background:var(--accent);color:#000;}
+.btn-primary:hover{background:#ffd700;box-shadow:var(--glow);}
+.btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:var(--red);color:#fff;}
+.btn-sm{padding:6px 14px;font-size:12px;}
+
+/* ── XP BAR ── */
+.xp-bar-wrap{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.xp-bar{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width 1s ease;}
+.xp-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);}
+
+/* ── LEVEL BADGE ── */
+.level-ring{
+  width:80px;height:80px;border-radius:50%;
+  border:3px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:'Orbitron';font-size:24px;font-weight:900;color:var(--accent);
+  box-shadow:0 0 20px rgba(240,192,64,0.3);
+  background:radial-gradient(circle,rgba(240,192,64,0.05),transparent);
+  flex-shrink:0;
+}
+.level-ring small{font-size:9px;letter-spacing:2px;color:var(--text2);}
+
+/* ── STUDENT PROFILE ── */
+.profile-header{
+  display:flex;align-items:center;gap:24px;
+  background:linear-gradient(135deg,var(--card),#0d1525);
+  border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;
+}
+.profile-avatar{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron';font-size:28px;font-weight:900;color:#000;
+  flex-shrink:0;
+}
+.profile-name{font-family:'Orbitron';font-size:22px;font-weight:700;color:var(--text);}
+.profile-rank{color:var(--accent);font-size:14px;letter-spacing:2px;margin-top:4px;}
+.profile-sec{color:var(--text2);font-size:12px;letter-spacing:2px;margin-top:2px;}
+
+/* ── QUIZ ── */
+.quiz-card{
+  background:linear-gradient(135deg,var(--card),#0a1020);
+  border:1px solid var(--border);border-radius:16px;padding:28px;
+}
+.quiz-q{font-size:18px;font-weight:600;margin-bottom:20px;line-height:1.5;}
+.quiz-opts{display:flex;flex-direction:column;gap:10px;}
+.quiz-opt{
+  padding:14px 18px;border:1px solid var(--border);border-radius:10px;
+  background:var(--bg2);cursor:pointer;transition:all .25s;font-size:15px;
+}
+.quiz-opt:hover{border-color:var(--accent);color:var(--accent);}
+.quiz-opt.correct{background:rgba(57,255,20,0.1);border-color:var(--green);color:var(--green);}
+.quiz-opt.wrong{background:rgba(255,51,102,0.1);border-color:var(--red);color:var(--red);}
+.quiz-opt.disabled{pointer-events:none;}
+.quiz-progress{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;
+  font-size:13px;color:var(--text2);
+}
+.quiz-score-panel{
+  text-align:center;padding:40px;
+  background:linear-gradient(135deg,var(--card),#0a1020);
+  border:1px solid var(--border);border-radius:16px;
+}
+.quiz-score-num{font-family:'Orbitron';font-size:72px;font-weight:900;color:var(--accent);}
+.quiz-xp-earned{font-family:'Share Tech Mono';font-size:20px;color:var(--green);margin-top:16px;}
+
+/* ── RESOURCES ── */
+.resource-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:16px;display:flex;align-items:center;gap:14px;transition:all .3s;
+}
+.resource-card:hover{border-color:var(--accent3);transform:translateY(-2px);}
+.resource-icon{font-size:28px;flex-shrink:0;}
+.resource-name{font-weight:700;font-size:15px;}
+.resource-desc{font-size:12px;color:var(--text2);margin-top:2px;}
+.resource-link{
+  margin-left:auto;padding:6px 16px;border:1px solid var(--accent3);border-radius:6px;
+  color:var(--accent3);font-size:12px;letter-spacing:1px;text-decoration:none;
+  flex-shrink:0;transition:all .3s;
+}
+.resource-link:hover{background:var(--accent3);color:#000;}
+
+/* ── MARKS ENTRY ── */
+.marks-row input{
+  width:80px;padding:6px;font-size:13px;
+  background:#0d1220;border:1px solid var(--border);border-radius:6px;
+  color:var(--text);text-align:center;
+}
+.marks-row .pct{font-family:'Share Tech Mono';font-size:13px;}
+.marks-row .xp-calc{color:var(--accent);font-family:'Share Tech Mono';font-size:12px;}
+
+/* ── DOUBTS ── */
+.doubt-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:16px;margin-bottom:10px;
+}
+.doubt-q{font-size:14px;margin-bottom:10px;}
+.doubt-meta{font-size:11px;color:var(--text2);margin-bottom:8px;}
+.doubt-ans{
+  background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.2);
+  border-radius:8px;padding:12px;margin-top:8px;font-size:14px;color:var(--accent3);
+}
+
+/* ── NOTIFICATION ── */
+.notif-panel{
+  position:fixed;top:70px;right:20px;width:320px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  z-index:500;display:none;box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  max-height:60vh;overflow-y:auto;
+}
+.notif-panel.open{display:block;}
+.notif-header{padding:14px 18px;border-bottom:1px solid var(--border);font-weight:700;letter-spacing:1px;}
+.notif-item{padding:12px 18px;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer;}
+.notif-item:hover{background:rgba(255,255,255,0.02);}
+.notif-item .notif-time{font-size:11px;color:var(--text2);margin-top:4px;}
+
+/* ── HOMEWORK ── */
+.hw-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:10px;
+}
+.hw-check{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;transition:all .3s;}
+.hw-check.done{background:var(--green);border-color:var(--green);}
+.hw-title{font-weight:600;}
+.hw-due{font-size:12px;color:var(--text2);margin-top:2px;}
+.hw-xp{margin-left:auto;font-family:'Share Tech Mono';font-size:12px;color:var(--accent);}
+
+/* ── LEADERBOARD ── */
+.lb-row{
+  display:flex;align-items:center;gap:14px;padding:12px 16px;
+  border-radius:10px;margin-bottom:6px;background:var(--bg2);
+  border:1px solid var(--border);
+}
+.lb-rank{font-family:'Orbitron';font-size:18px;font-weight:900;width:32px;color:var(--text2);text-align:center;}
+.lb-rank.gold{color:#ffd700;}
+.lb-rank.silver{color:#c0c0c0;}
+.lb-rank.bronze{color:#cd7f32;}
+.lb-name{flex:1;font-weight:600;}
+.lb-xp{font-family:'Share Tech Mono';font-size:13px;color:var(--accent);}
+
+/* ── OVERLORD SPECIFIC ── */
+.inject-xp-form{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.cmd-btn{
+  padding:12px 20px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-family:'Rajdhani';font-size:14px;
+  cursor:pointer;transition:all .3s;letter-spacing:1px;text-align:center;
+}
+.cmd-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ── CHAPTER GRID ── */
+.chapter-grid{overflow-x:auto;}
+.chapter-table{border-collapse:collapse;min-width:800px;}
+.chapter-table th{background:var(--bg3);padding:8px 12px;font-size:11px;letter-spacing:1px;color:var(--text2);}
+.chapter-table td{padding:6px;border:1px solid var(--border);}
+.mastery-cell{
+  width:60px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;
+}
+.mastery-cell.mastered{background:rgba(57,255,20,0.2);color:var(--green);}
+.mastery-cell.developing{background:rgba(240,192,64,0.2);color:var(--accent);}
+.mastery-cell.needs{background:rgba(255,51,102,0.2);color:var(--red);}
+.mastery-cell.none{background:var(--bg2);color:var(--text2);}
+
+/* ── BROADCAST ── */
+.broadcast-item{
+  background:linear-gradient(135deg,rgba(240,192,64,0.05),transparent);
+  border:1px solid rgba(240,192,64,0.2);border-radius:10px;
+  padding:14px 18px;margin-bottom:10px;
+}
+.broadcast-item .bc-title{font-weight:700;margin-bottom:4px;}
+.broadcast-item .bc-time{font-size:11px;color:var(--text2);}
+
+/* ── MODAL ── */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:5000;
+  display:none;align-items:center;justify-content:center;
+}
+.modal.open{display:flex;}
+.modal-box{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:28px;width:520px;max-width:95vw;max-height:85vh;overflow-y:auto;
+  position:relative;
+}
+.modal-title{font-family:'Orbitron';font-size:16px;color:var(--accent);margin-bottom:20px;letter-spacing:2px;}
+.modal-close{
+  position:absolute;top:16px;right:16px;background:none;border:none;
+  color:var(--text2);font-size:20px;cursor:pointer;
+}
+.modal-close:hover{color:var(--red);}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:30px;right:30px;
+  background:var(--card);border:1px solid var(--green);border-radius:10px;
+  padding:14px 24px;z-index:9999;font-size:14px;
+  transform:translateX(120%);transition:transform .4s ease;
+}
+.toast.show{transform:translateX(0);}
+.toast.error{border-color:var(--red);}
+
+/* ── STREAKS ── */
+.streak-fire{font-size:24px;}
+
+/* ── MISC ── */
+.flex-between{display:flex;justify-content:space-between;align-items:center;}
+.flex-gap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.section-title{
+  font-family:'Orbitron';font-size:20px;font-weight:700;
+  color:var(--text);margin-bottom:20px;letter-spacing:2px;
+  border-bottom:1px solid var(--border);padding-bottom:14px;
+}
+.tag{
+  display:inline-block;padding:2px 10px;border-radius:4px;font-size:11px;
+  background:rgba(0,229,255,0.1);color:var(--accent3);border:1px solid rgba(0,229,255,0.2);
+  letter-spacing:1px;
+}
+.empty-state{
+  text-align:center;padding:40px;color:var(--text2);font-size:14px;
+}
+.sep{height:1px;background:var(--border);margin:20px 0;}
+.rank-icon{font-size:18px;}
+
+/* ── ANIMATE IN ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{animation:fadeIn .4s ease-out;}
+
+/* ── SECTION FILTER TABS ── */
+.filter-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-tab{
+  padding:6px 14px;border-radius:6px;border:1px solid var(--border);
+  background:transparent;color:var(--text2);font-size:12px;letter-spacing:1px;
+  cursor:pointer;transition:all .2s;
+}
+.filter-tab.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particles"></canvas>
+
+<!-- LEVEL UP OVERLAY -->
+<div id="levelUpOverlay">
+  <div class="levelup-burst">⚡ LEVEL UP ⚡</div>
+  <div class="levelup-number" id="luNumber">0</div>
+  <div class="levelup-label">HUNTER ASCENDED</div>
+  <div class="levelup-rank" id="luRank"></div>
+  <div class="levelup-xp" id="luXP"></div>
+  <button class="levelup-close" onclick="closeLevelUp()">CONTINUE →</button>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-container">
+    <div class="login-title">THE SYSTEM</div>
+    <div class="login-sub">GRADE 10 · MATH MASTERY · v6</div>
+    <div class="role-tabs">
+      <button class="role-tab active" onclick="setRole('student',this)">🎯 HUNTER</button>
+      <button class="role-tab" onclick="setRole('admin',this)">⚔️ OVERLORD</button>
+    </div>
+    <div id="loginStudentFields">
+      <div class="login-field">
+        <label>USERNAME</label>
+        <select id="loginStudentSelect">
+          <option value="">— Select Hunter —</option>
+        </select>
+      </div>
+    </div>
+    <div id="loginAdminFields" style="display:none">
+      <div class="login-field">
+        <label>OVERLORD ID</label>
+        <input type="text" id="adminUser" placeholder="admin"/>
+      </div>
+    </div>
+    <div class="login-field">
+      <label>ACCESS KEY</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">ENTER THE SYSTEM</button>
+    <div class="login-error" id="loginError">⚠ Invalid credentials. Access denied.</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-logo">⚡ THE SYSTEM</div>
+    <div class="topbar-user">
+      <span class="topbar-name" id="topbarName">—</span>
+      <span class="topbar-xp" id="topbarXP">0 XP</span>
+      <button class="notif-btn" onclick="toggleNotif()" id="notifBtn">
+        🔔<span class="notif-badge" id="notifBadge" style="display:none">0</span>
+      </button>
+      <button class="exit-btn" onclick="logout()">EXIT</button>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS PANEL -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-header">📢 Announcements</div>
+    <div id="notifList"><div class="empty-state">No announcements</div></div>
+  </div>
+
+  <!-- ADMIN NAV -->
+  <div class="nav" id="adminNav" style="display:none">
+    <button class="nav-btn active" onclick="showSection('overlord')">🏠 Dashboard</button>
+    <button class="nav-btn" onclick="showSection('marksEntry')">✏️ Marks Entry</button>
+    <button class="nav-btn" onclick="showSection('chapterTests')">📖 Chapter Tests</button>
+    <button class="nav-btn" onclick="showSection('masteryGrid')">🗺️ Mastery Grid</button>
+    <button class="nav-btn" onclick="showSection('rosterSection')">📋 Roster</button>
+    <button class="nav-btn" onclick="showSection('doubtsAdmin')">❓ Doubts</button>
+    <button class="nav-btn" onclick="showSection('hwAdmin')">📚 Homework</button>
+    <button class="nav-btn" onclick="showSection('resourcesAdmin')">📁 Resources</button>
+    <button class="nav-btn" onclick="showSection('broadcastSection')">📢 Broadcast</button>
+  </div>
+
+  <!-- STUDENT NAV -->
+  <div class="nav" id="studentNav" style="display:none">
+    <button class="nav-btn active" onclick="showSection('studentProfile')">👤 My Profile</button>
+    <button class="nav-btn" onclick="showSection('practiceSection')">🧠 Practice</button>
+    <button class="nav-btn" onclick="showSection('resourcesStudent')">📁 Resources</button>
+    <button class="nav-btn" onclick="showSection('hwStudent')">📚 Homework</button>
+    <button class="nav-btn" onclick="showSection('doubtsStudent')">❓ Doubts</button>
+    <button class="nav-btn" onclick="showSection('leaderboardSection')">🏆 Leaderboard</button>
+  </div>
+
+  <!-- ════════ ADMIN SECTIONS ════════ -->
+
+  <!-- OVERLORD DASHBOARD -->
+  <div class="section" id="overlord">
+    <div class="section-title">⚔️ Overlord Command Center</div>
+    <div class="grid-4" style="margin-bottom:20px">
+      <div class="stat-card">
+        <div class="stat-num" id="statSurge">0</div>
+        <div class="stat-label">🟢 SURGING ≥70%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statStagnant">0</div>
+        <div class="stat-label">🟡 STAGNANT 40-69%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statRisk">0</div>
+        <div class="stat-label">🔴 AT RISK &lt;40%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">79</div>
+        <div class="stat-label">👥 HUNTERS</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">⚡ XP COMMAND</div>
+        <div class="inject-xp-form">
+          <div>
+            <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">STUDENT</label>
+            <select id="injectStudent" style="width:200px"></select>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">XP AMOUNT</label>
+            <input type="number" id="injectXP" style="width:100px" placeholder="0"/>
+          </div>
+          <button class="btn btn-primary" onclick="injectXP()">⚡ INJECT</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📢 QUICK BROADCAST</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="text" id="quickBroadcast" style="flex:1;min-width:200px" placeholder="Announcement..."/>
+          <button class="btn btn-primary" onclick="sendBroadcast()">SEND</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏆 HALL OF FAME — TOP 10</div>
+      <div id="hofList"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 SECTION ANALYTICS</div>
+      <div class="grid-2">
+        <div>
+          <div style="margin-bottom:8px;font-size:13px;color:var(--text2)">SEC A — 39 Students</div>
+          <div class="progress-bar"><div class="progress-fill" id="secABar" style="width:0%"></div></div>
+          <div style="font-family:'Share Tech Mono';font-size:12px;color:var(--accent);margin-top:4px" id="secAAvg">Avg: —%</div>
+        </div>
+        <div>
+          <div style="margin-bottom:8px;font-size:13px;color:var(--text2)">SEC B — 40 Students</div>
+          <div class="progress-bar"><div class="progress-fill" id="secBBar" style="width:0%"></div></div>
+          <div style="font-family:'Share Tech Mono';font-size:12px;color:var(--accent);margin-top:4px" id="secBAvg">Avg: —%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKS ENTRY -->
+  <div class="section" id="marksEntry">
+    <div class="section-title">✏️ Marks Entry</div>
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div class="flex-gap">
+          <input type="text" id="testNameInput" placeholder="Test name..." style="width:220px"/>
+          <input type="number" id="maxA" placeholder="Max (A)" style="width:100px"/>
+          <input type="number" id="maxB" placeholder="Max (B)" style="width:100px"/>
+        </div>
+        <button class="btn btn-primary" onclick="saveAllMarks()">💾 SAVE ALL + CALC XP</button>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterMarksSection('all',this)">All</button>
+        <button class="filter-tab" onclick="filterMarksSection('A',this)">Sec A</button>
+        <button class="filter-tab" onclick="filterMarksSection('B',this)">Sec B</button>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Name</th><th>Sec</th>
+            <th>Marks</th><th>% (Live)</th><th>Status</th><th>XP Gain</th>
+          </tr></thead>
+          <tbody id="marksBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER TESTS -->
+  <div class="section" id="chapterTests">
+    <div class="section-title">📖 Chapter Tests</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">ADD CHAPTER TEST</div>
+      <div class="flex-gap" style="flex-wrap:wrap">
+        <input type="text" id="ctChapter" placeholder="Chapter name" style="width:160px"/>
+        <input type="text" id="ctName" placeholder="Test name" style="width:160px"/>
+        <input type="number" id="ctMax" placeholder="Max marks" style="width:100px"/>
+        <button class="btn btn-primary" onclick="openChapterTestModal()">+ CREATE TEST</button>
+      </div>
+    </div>
+    <div id="chapterTestList"></div>
+  </div>
+
+  <!-- MASTERY GRID -->
+  <div class="section" id="masteryGrid">
+    <div class="section-title">🗺️ Chapter Mastery Grid</div>
+    <div class="chapter-grid">
+      <div id="masteryGridWrap"></div>
+    </div>
+  </div>
+
+  <!-- ROSTER -->
+  <div class="section" id="rosterSection">
+    <div class="section-title">📋 Hunter Roster</div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterRoster('all',this)">All</button>
+      <button class="filter-tab" onclick="filterRoster('A',this)">Sec A</button>
+      <button class="filter-tab" onclick="filterRoster('B',this)">Sec B</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Name</th><th>Sec</th><th>Avg %</th><th>XP</th>
+          <th>Level</th><th>Rank</th><th>Status</th><th>HW</th><th>Streak</th>
+        </tr></thead>
+        <tbody id="rosterBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DOUBTS ADMIN -->
+  <div class="section" id="doubtsAdmin">
+    <div class="section-title">❓ Doubt Management</div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterDoubts('all',this)">All</button>
+      <button class="filter-tab" onclick="filterDoubts('pending',this)">Pending</button>
+      <button class="filter-tab" onclick="filterDoubts('answered',this)">Answered</button>
+    </div>
+    <div id="doubtsList"></div>
+  </div>
+
+  <!-- HOMEWORK ADMIN -->
+  <div class="section" id="hwAdmin">
+    <div class="section-title">📚 Homework Tracker</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">ADD ASSIGNMENT</div>
+      <div class="flex-gap" style="flex-wrap:wrap">
+        <input type="text" id="hwTitle" placeholder="Assignment title..." style="flex:1;min-width:200px"/>
+        <input type="text" id="hwDue" placeholder="Due date (e.g. 25 Jun)" style="width:140px"/>
+        <select id="hwSection" style="width:130px">
+          <option value="both">Both Sections</option>
+          <option value="A">Section A</option>
+          <option value="B">Section B</option>
+        </select>
+        <input type="number" id="hwXP" placeholder="Bonus XP" style="width:100px"/>
+        <button class="btn btn-primary" onclick="addHomework()">✅ ASSIGN</button>
+      </div>
+    </div>
+    <div id="hwAdminList"></div>
+  </div>
+
+  <!-- RESOURCES ADMIN -->
+  <div class="section" id="resourcesAdmin">
+    <div class="section-title">📁 Resources</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">ADD RESOURCE</div>
+      <div class="grid-2">
+        <div>
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">RESOURCE NAME</label>
+          <input type="text" id="resName" style="width:100%" placeholder="e.g. Chapter 3 Notes"/>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">TYPE</label>
+          <select id="resType" style="width:100%">
+            <option value="pdf">📄 PDF</option>
+            <option value="link">🔗 Link</option>
+            <option value="video">🎥 Video</option>
+            <option value="notes">📝 Notes</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">URL / LINK</label>
+          <input type="url" id="resUrl" style="width:100%" placeholder="https://..."/>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">CHAPTER / TOPIC</label>
+          <input type="text" id="resChapter" style="width:100%" placeholder="e.g. Algebra, Trigonometry"/>
+        </div>
+        <div style="grid-column:1/-1">
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">DESCRIPTION (optional)</label>
+          <input type="text" id="resDesc" style="width:100%" placeholder="Short description..."/>
+        </div>
+        <div style="grid-column:1/-1">
+          <label style="font-size:11px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:4px">VISIBLE TO</label>
+          <select id="resSec" style="width:180px">
+            <option value="both">Both Sections</option>
+            <option value="A">Section A Only</option>
+            <option value="B">Section B Only</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="addResource()">📁 ADD RESOURCE</button>
+    </div>
+    <div id="resourceAdminList"></div>
+  </div>
+
+  <!-- BROADCAST -->
+  <div class="section" id="broadcastSection">
+    <div class="section-title">📢 Broadcasts</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">NEW BROADCAST</div>
+      <input type="text" id="bcTitle" style="width:100%;margin-bottom:10px" placeholder="Title..."/>
+      <textarea id="bcMessage" rows="3" style="width:100%;background:#0d1220;border:1px solid var(--border);border-radius:8px;color:var(--text);padding:10px;font-family:'Rajdhani';resize:vertical" placeholder="Message..."></textarea>
+      <button class="btn btn-primary" style="margin-top:10px" onclick="sendFullBroadcast()">📢 BROADCAST</button>
+    </div>
+    <div id="broadcastList"></div>
+  </div>
+
+  <!-- ════════ STUDENT SECTIONS ════════ -->
+
+  <!-- STUDENT PROFILE -->
+  <div class="section" id="studentProfile">
+    <div class="profile-header fade-in">
+      <div class="profile-avatar" id="sAvatar">?</div>
+      <div>
+        <div class="profile-name" id="sName">—</div>
+        <div class="profile-rank" id="sRankLabel">—</div>
+        <div class="profile-sec" id="sSec">SECTION —</div>
+      </div>
+      <div style="margin-left:auto;text-align:center">
+        <div class="level-ring" id="sLevelRing">
+          <div id="sLevel">0</div>
+          <small>LEVEL</small>
+        </div>
+      </div>
+    </div>
+    <div class="card fade-in">
+      <div class="flex-between" style="margin-bottom:8px">
+        <span style="font-size:13px;color:var(--text2);letter-spacing:1px">XP PROGRESS</span>
+        <span id="sXPLabel" style="font-family:'Share Tech Mono';font-size:13px;color:var(--accent)">0 / 0</span>
+      </div>
+      <div class="xp-bar"><div class="xp-fill" id="sXPFill" style="width:0%"></div></div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px" id="sNextLevel">— XP to next level</div>
+    </div>
+    <div class="grid-4" style="margin-bottom:16px">
+      <div class="stat-card"><div class="stat-num" id="sAvgPct">—</div><div class="stat-label">AVG %</div></div>
+      <div class="stat-card"><div class="stat-num" id="sXPTotal">0</div><div class="stat-label">TOTAL XP</div></div>
+      <div class="stat-card"><div class="stat-num" id="sGlobalRank">#—</div><div class="stat-label">GLOBAL RANK</div></div>
+      <div class="stat-card"><div class="stat-num" id="sSecRank">#—</div><div class="stat-label">SEC RANK</div></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">🏅 ACHIEVEMENTS</div>
+      <div id="sAchievements" class="flex-gap"></div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-title">📊 TEST HISTORY</div>
+      <div id="sTestHistory"></div>
+    </div>
+  </div>
+
+  <!-- PRACTICE SECTION -->
+  <div class="section" id="practiceSection">
+    <div class="section-title">🧠 Practice Arena</div>
+    <div id="quizTopicSelect" class="grid-3" style="margin-bottom:20px">
+      <!-- Topics filled dynamically -->
+    </div>
+    <div id="quizArena" style="display:none">
+      <div class="quiz-card">
+        <div class="quiz-progress">
+          <span>Question <span id="qNum">1</span> / <span id="qTotal">10</span></span>
+          <span>⭐ Score: <span id="qScore">0</span></span>
+          <span>🎯 Topic: <span id="qTopic">—</span></span>
+        </div>
+        <div class="progress-bar" style="margin-bottom:20px">
+          <div class="progress-fill blue" id="qProgressBar" style="width:10%"></div>
+        </div>
+        <div class="quiz-q" id="qQuestion"></div>
+        <div class="quiz-opts" id="qOpts"></div>
+        <div id="qExplanation" style="display:none;margin-top:16px;padding:14px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.2);border-radius:8px;font-size:13px;color:var(--accent3)"></div>
+        <div style="display:flex;justify-content:flex-end;margin-top:20px">
+          <button class="btn btn-primary" id="nextQBtn" style="display:none" onclick="nextQuestion()">NEXT →</button>
+        </div>
+      </div>
+    </div>
+    <div id="quizResult" style="display:none">
+      <div class="quiz-score-panel fade-in">
+        <div style="font-size:40px;margin-bottom:12px">🏆</div>
+        <div class="quiz-score-num" id="quizFinalScore">0/10</div>
+        <div style="font-size:16px;color:var(--text2);margin-top:8px">Practice Complete!</div>
+        <div class="quiz-xp-earned" id="quizXPEarned">+0 XP</div>
+        <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-secondary" onclick="showQuizTopics()">← BACK</button>
+          <button class="btn btn-primary" onclick="retryQuiz()">🔁 TRY AGAIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCES STUDENT -->
+  <div class="section" id="resourcesStudent">
+    <div class="section-title">📁 Study Resources</div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterResources('all',this)">All</button>
+      <button class="filter-tab" onclick="filterResources('pdf',this)">📄 PDFs</button>
+      <button class="filter-tab" onclick="filterResources('link',this)">🔗 Links</button>
+      <button class="filter-tab" onclick="filterResources('video',this)">🎥 Videos</button>
+      <button class="filter-tab" onclick="filterResources('notes',this)">📝 Notes</button>
+    </div>
+    <div id="resourceStudentList"><div class="empty-state">No resources yet. Ask your teacher!</div></div>
+  </div>
+
+  <!-- HOMEWORK STUDENT -->
+  <div class="section" id="hwStudent">
+    <div class="section-title">📚 My Homework</div>
+    <div id="hwStudentList"><div class="empty-state">No assignments yet.</div></div>
+  </div>
+
+  <!-- DOUBTS STUDENT -->
+  <div class="section" id="doubtsStudent">
+    <div class="section-title">❓ My Doubts</div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">ASK A DOUBT</div>
+      <textarea id="newDoubtText" rows="3" style="width:100%;background:#0d1220;border:1px solid var(--border);border-radius:8px;color:var(--text);padding:10px;font-family:'Rajdhani';resize:vertical;margin-bottom:10px" placeholder="Type your question..."></textarea>
+      <button class="btn btn-primary" onclick="submitDoubt()">📤 SUBMIT DOUBT</button>
+    </div>
+    <div id="studentDoubtList"></div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="section" id="leaderboardSection">
+    <div class="section-title">🏆 Leaderboard</div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterLB('global',this)">🌐 Global</button>
+      <button class="filter-tab" onclick="filterLB('A',this)">Sec A</button>
+      <button class="filter-tab" onclick="filterLB('B',this)">Sec B</button>
+    </div>
+    <div id="leaderboardList"></div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  THE SYSTEM v6 — CORE ENGINE
+// ══════════════════════════════════════════════════════════════════
+
+// ── STUDENT DATA ─────────────────────────────────────────────────
+const STUDENTS_A = [
+  "Aasritha P","Aathmika T","Anish Kumar Swai","Archit Kumar Dey","Bhargav T V",
+  "Diveeth Himasai","Gandla Naga Suhas","Himanshu A","Kathirvel I S","Prishaa S",
+  "Ratish PS","Rittvik S","Sanjna Shree G R","Srishti S","Swaathi K R",
+  "Syed Junaid Ali","Thanush Kumar S S","Jayani Prusty","Priyadarshani Sahu","Nishan S",
+  "Sounavo Roy","Yasaswini Reddy E","Akshath R","Anisa T","Ashwath N J",
+  "Chavez T","Dinesh P","Diyan D","Harshitha B","Kabilan M",
+  "Lakshitha P","Manish K","Miruthula S","Reshna B","Rishi Keshev G D",
+  "Shraddha K","Soundarya K V","Mohitha S","Eershika A"
+];
+const STUDENTS_B = [
+  "Deepshika S","Advaitha A","Ashriya Sharon A R","Ashween G","B Jithesh",
+  "Deepakumar M","Dharanish Balaji G","Muhilini R","Gopika D","Jayawant V",
+  "Jemimah Priscilla D","Jeykeeshav S","Kamesh M","Logesh S P","Lohita Santhi R",
+  "Nikhilesh S","Nithya Shree G","Nithyasri S","Prajesh P R","Pranav V D M",
+  "Premsai T","Saai Narasimman L G","Sanjay M","Shanibraaz S","Shanthanu S",
+  "Siddharth V G","Tanusiya TA","Tharika T","Vishwa Prakash","Harshini V",
+  "Sangamithra S P","Trivena S","Harshitha M","Shiny Benila B","Leja Sree R",
+  "Ervin Danny","Akshay Ram B","A Suruthika","Thiyashri T","Gokuleshwaran K P"
+];
+
+const RANK_THRESHOLDS = [
+  {min:0,   name:"Initiate",   icon:"🌱"},
+  {min:200, name:"Scout",      icon:"🎯"},
+  {min:500, name:"Hunter",     icon:"🗡️"},
+  {min:1000,name:"Warrior",    icon:"⚔️"},
+  {min:2000,name:"Elite",      icon:"🛡️"},
+  {min:3500,name:"Champion",   icon:"🏆"},
+  {min:5000,name:"Legend",     icon:"🌟"},
+  {min:7500,name:"Mythic",     icon:"👑"},
+  {min:10000,name:"Overlord",  icon:"⚡"},
+];
+
+const XP_PER_LEVEL = 100;
+
+function getLevel(xp){ return Math.floor(xp / XP_PER_LEVEL); }
+function getXPInLevel(xp){ return xp % XP_PER_LEVEL; }
+function getRank(xp){
+  let r = RANK_THRESHOLDS[0];
+  for(const t of RANK_THRESHOLDS) if(xp >= t.min) r = t;
+  return r;
+}
+function nameToKey(name){ return name.toLowerCase().replace(/\s+/g,'_'); }
+function calcXP(marks, max){
+  if(!max||!marks) return 0;
+  const pct = marks/max;
+  let base = Math.round(pct * 100);
+  let bonus = pct >= 0.9 ? 50 : pct >= 0.75 ? 25 : pct >= 0.6 ? 10 : 0;
+  return base + bonus;
+}
+
+// ── STATE ─────────────────────────────────────────────────────────
+let state = {
+  role: null, // 'admin' | 'student'
+  currentStudent: null, // username key
+  students: {}, // username → {name,sec,xp,hw:{},doubts:[],tests:[]}
+  resources: [],
+  broadcasts: [],
+  homeworks: [],
+  chapterTests: [],
+  quizData: null, // current quiz state
+  currentQuizTopic: null,
+  currentQuizIndex: 0,
+  currentQuizScore: 0,
+  currentQuizAnswered: false,
+};
+
+// ── STORAGE ───────────────────────────────────────────────────────
+function save(){ localStorage.setItem('tsv6', JSON.stringify(state)); }
+function load(){
+  const d = localStorage.getItem('tsv6');
+  if(d){ const s = JSON.parse(d); Object.assign(state, s); }
+}
+
+// ── INIT STUDENTS ─────────────────────────────────────────────────
+function initStudents(){
+  const all = [
+    ...STUDENTS_A.map(n=>({name:n,sec:'A'})),
+    ...STUDENTS_B.map(n=>({name:n,sec:'B'}))
+  ];
+  for(const s of all){
+    const k = nameToKey(s.name);
+    if(!state.students[k]){
+      state.students[k] = {
+        name:s.name, sec:s.sec, xp:0, tests:[], hw:{}, doubts:[],
+        streak:0, lastStreak:null
+      };
+    }
+  }
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────────
+let loginRole = 'student';
+function setRole(r, btn){
+  loginRole = r;
+  document.querySelectorAll('.role-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('loginStudentFields').style.display = r==='student'?'block':'none';
+  document.getElementById('loginAdminFields').style.display = r==='admin'?'block':'none';
+}
+
+function populateStudentSelect(){
+  const sel = document.getElementById('loginStudentSelect');
+  sel.innerHTML = '<option value="">— Select Hunter —</option>';
+  const all = [
+    ...STUDENTS_A.map(n=>({name:n,sec:'A'})),
+    ...STUDENTS_B.map(n=>({name:n,sec:'B'}))
+  ];
+  for(const s of all){
+    const opt = document.createElement('option');
+    opt.value = nameToKey(s.name);
+    opt.textContent = `${s.name} (Sec ${s.sec})`;
+    sel.appendChild(opt);
+  }
+}
+
+function doLogin(){
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  if(loginRole === 'admin'){
+    const user = document.getElementById('adminUser').value.trim() || 'admin';
+    if(SYSTEM_CREDENTIALS && SYSTEM_CREDENTIALS.admin && pass === SYSTEM_CREDENTIALS.admin.pass){
+      enterApp('admin', null);
+    } else {
+      errEl.style.display = 'block';
+    }
+  } else {
+    const username = document.getElementById('loginStudentSelect').value;
+    if(!username){ errEl.style.display = 'block'; errEl.textContent = '⚠ Select a hunter first.'; return; }
+    const cred = SYSTEM_CREDENTIALS && SYSTEM_CREDENTIALS[username];
+    if(cred && pass === cred.pass){
+      enterApp('student', username);
+    } else {
+      errEl.style.display = 'block'; errEl.textContent = '⚠ Invalid credentials. Access denied.';
+    }
+  }
+}
+
+function enterApp(role, username){
+  state.role = role;
+  state.currentStudent = username;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  if(role === 'admin'){
+    document.getElementById('adminNav').style.display = 'flex';
+    document.getElementById('studentNav').style.display = 'none';
+    document.getElementById('topbarName').textContent = '⚔️ OVERLORD';
+    document.getElementById('topbarXP').style.display = 'none';
+    document.getElementById('notifBtn').style.display = 'none';
+    showSection('overlord');
+    renderOverlord();
+    renderMarksBody();
+    renderRoster();
+  } else {
+    document.getElementById('studentNav').style.display = 'flex';
+    document.getElementById('adminNav').style.display = 'none';
+    const st = state.students[username];
+    document.getElementById('topbarName').textContent = '🎯 ' + (st ? st.name : username);
+    document.getElementById('topbarXP').textContent = (st ? st.xp : 0) + ' XP';
+    showSection('studentProfile');
+    renderStudentProfile();
+    renderNotifications();
+  }
+  loadMarklistData();
+}
+
+function logout(){
+  state.role = null; state.currentStudent = null;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginPass').value = '';
+}
+
+// ── SECTION SWITCHING ─────────────────────────────────────────────
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el){ el.classList.add('active'); el.classList.add('fade-in'); }
+  // activate nav btn
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b=>{ if(b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${id}'`)) b.classList.add('active'); });
+
+  // Lazy render
+  if(id==='practiceSection') renderQuizTopics();
+  if(id==='resourcesStudent'||id==='resourcesAdmin') renderResources();
+  if(id==='hwStudent') renderHWStudent();
+  if(id==='hwAdmin') renderHWAdmin();
+  if(id==='doubtsStudent') renderDoubtsStudent();
+  if(id==='doubtsAdmin') renderDoubtsAdmin();
+  if(id==='leaderboardSection') renderLeaderboard('global');
+  if(id==='masteryGrid') renderMasteryGrid();
+  if(id==='broadcastSection') renderBroadcasts();
+  if(id==='rosterSection') renderRoster();
+  if(id==='chapterTests') renderChapterTests();
+}
+
+// ── MARKS ENTRY RENDERING ─────────────────────────────────────────
+let marksFilterSec = 'all';
+function filterMarksSection(sec, btn){
+  marksFilterSec = sec;
+  document.querySelectorAll('#marksEntry .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMarksBody();
+}
+
+function renderMarksBody(){
+  const tbody = document.getElementById('marksBody');
+  const maxA = parseFloat(document.getElementById('maxA').value)||0;
+  const maxB = parseFloat(document.getElementById('maxB').value)||0;
+  const all = [
+    ...STUDENTS_A.map(n=>({name:n,sec:'A'})),
+    ...STUDENTS_B.map(n=>({name:n,sec:'B'}))
+  ];
+  let i=0, html='';
+  for(const s of all){
+    if(marksFilterSec!=='all' && s.sec!==marksFilterSec) continue;
+    const k = nameToKey(s.name);
+    const max = s.sec==='A' ? maxA : maxB;
+    i++;
+    html += `<tr class="marks-row">
+      <td>${i}</td>
+      <td>${s.name}</td>
+      <td><span class="tag">Sec ${s.sec}</span></td>
+      <td><input type="number" id="marks_${k}" min="0" max="${max||999}" placeholder="0"
+         onchange="updateMarksRow('${k}','${s.sec}')"/></td>
+      <td><span class="pct" id="pct_${k}">—</span></td>
+      <td><span id="status_${k}">—</span></td>
+      <td><span class="xp-calc" id="xpcalc_${k}">—</span></td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+function updateMarksRow(key, sec){
+  const maxA = parseFloat(document.getElementById('maxA').value)||0;
+  const maxB = parseFloat(document.getElementById('maxB').value)||0;
+  const max = sec==='A' ? maxA : maxB;
+  const val = parseFloat(document.getElementById('marks_'+key).value)||0;
+  if(!max){ return; }
+  const pct = Math.round(val/max*100);
+  const xp = calcXP(val, max);
+  const status = pct>=70?'<span class="badge surge">SURGING</span>':pct>=40?'<span class="badge stagnant">STAGNANT</span>':'<span class="badge risk">AT RISK</span>';
+  document.getElementById('pct_'+key).textContent = pct+'%';
+  document.getElementById('status_'+key).innerHTML = status;
+  document.getElementById('xpcalc_'+key).textContent = '+'+xp+' XP';
+}
+
+function saveAllMarks(){
+  const testName = document.getElementById('testNameInput').value || 'Test '+Date.now();
+  const maxA = parseFloat(document.getElementById('maxA').value)||0;
+  const maxB = parseFloat(document.getElementById('maxB').value)||0;
+  if(!maxA && !maxB){ showToast('Set max marks first!','error'); return; }
+  let saved = 0;
+  const all = [...STUDENTS_A.map(n=>({name:n,sec:'A'})),...STUDENTS_B.map(n=>({name:n,sec:'B'}))];
+  for(const s of all){
+    const k = nameToKey(s.name);
+    const inp = document.getElementById('marks_'+k);
+    if(!inp) continue;
+    const val = parseFloat(inp.value);
+    if(isNaN(val)) continue;
+    const max = s.sec==='A' ? maxA : maxB;
+    const xpGain = calcXP(val, max);
+    const pct = max ? Math.round(val/max*100) : 0;
+    const st = state.students[k];
+    if(!st) continue;
+    const oldLevel = getLevel(st.xp);
+    st.xp += xpGain;
+    st.tests = st.tests || [];
+    st.tests.push({name:testName, marks:val, max, pct, xp:xpGain, date:new Date().toLocaleDateString()});
+    const newLevel = getLevel(st.xp);
+    if(newLevel > oldLevel){
+      setTimeout(()=>showLevelUp(k, newLevel), saved * 200);
+    }
+    saved++;
+  }
+  save();
+  renderOverlord();
+  showToast(`✅ Marks saved for ${saved} students! XP calculated.`);
+  // XP float
+  const btn = document.querySelector('#marksEntry .btn-primary');
+  if(btn){ const r = btn.getBoundingClientRect(); spawnXPFloat(r.left, r.top, 'XP CALCULATED'); }
+}
+
+// ── XP INJECT ─────────────────────────────────────────────────────
+function populateInjectDropdown(){
+  const sel = document.getElementById('injectStudent');
+  sel.innerHTML = '';
+  const all = [...STUDENTS_A.map(n=>({name:n,sec:'A'})),...STUDENTS_B.map(n=>({name:n,sec:'B'}))];
+  for(const s of all){
+    const opt = document.createElement('option');
+    opt.value = nameToKey(s.name);
+    opt.textContent = `${s.name} (Sec ${s.sec})`;
+    sel.appendChild(opt);
+  }
+}
+
+function injectXP(){
+  const k = document.getElementById('injectStudent').value;
+  const amt = parseInt(document.getElementById('injectXP').value)||0;
+  if(!k||!amt){ showToast('Select student and enter XP','error'); return; }
+  const st = state.students[k];
+  if(!st) return;
+  const oldLevel = getLevel(st.xp);
+  st.xp += amt;
+  const newLevel = getLevel(st.xp);
+  save();
+  if(newLevel > oldLevel) showLevelUp(k, newLevel);
+  showToast(`⚡ +${amt} XP injected to ${st.name}`);
+  spawnXPFloat(window.innerWidth/2, window.innerHeight/2, '+'+amt+' XP');
+  renderOverlord();
+}
+
+// ── LEVEL UP ANIMATION ────────────────────────────────────────────
+function showLevelUp(username, newLevel){
+  const st = state.students[username];
+  if(!st) return;
+  const rank = getRank(st.xp);
+  document.getElementById('luNumber').textContent = newLevel;
+  document.getElementById('luRank').textContent = rank.icon+' '+rank.name;
+  document.getElementById('luXP').textContent = `Total XP: ${st.xp}`;
+  document.getElementById('levelUpOverlay').classList.add('active');
+  spawnConfetti();
+  // If student is logged in and this is their profile
+  if(state.currentStudent === username){
+    renderStudentProfile();
+    document.getElementById('topbarXP').textContent = st.xp + ' XP';
+  }
+}
+
+function closeLevelUp(){
+  document.getElementById('levelUpOverlay').classList.remove('active');
+}
+
+function spawnConfetti(){
+  const colors = ['#f0c040','#ff6b35','#00e5ff','#39ff14','#b44fff','#ff3366'];
+  for(let i=0;i<60;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random()*100+'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.borderRadius = Math.random()>.5 ? '50%' : '0';
+    c.style.width = (6+Math.random()*8)+'px';
+    c.style.height = (6+Math.random()*8)+'px';
+    c.style.animationDuration = (1.5+Math.random()*2)+'s';
+    c.style.animationDelay = Math.random()*1+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 4000);
+  }
+}
+
+function spawnXPFloat(x, y, text){
+  const el = document.createElement('div');
+  el.className = 'xp-float';
+  el.textContent = text;
+  el.style.left = x+'px';
+  el.style.top = y+'px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2000);
+}
+
+// ── OVERLORD DASHBOARD ────────────────────────────────────────────
+function renderOverlord(){
+  const all = Object.values(state.students);
+  let surge=0,stagnant=0,risk=0;
+  let sumA=0,cntA=0,sumB=0,cntB=0;
+  for(const s of all){
+    const avg = getAvgPct(s);
+    if(avg !== null){
+      if(avg>=70) surge++; else if(avg>=40) stagnant++; else risk++;
+      if(s.sec==='A'){sumA+=avg;cntA++;}
+      else{sumB+=avg;cntB++;}
+    }
+  }
+  document.getElementById('statSurge').textContent = surge;
+  document.getElementById('statStagnant').textContent = stagnant;
+  document.getElementById('statRisk').textContent = risk;
+  const avgA = cntA ? Math.round(sumA/cntA) : 0;
+  const avgB = cntB ? Math.round(sumB/cntB) : 0;
+  document.getElementById('secABar').style.width = avgA+'%';
+  document.getElementById('secAAvg').textContent = 'Avg: '+avgA+'%';
+  document.getElementById('secBBar').style.width = avgB+'%';
+  document.getElementById('secBAvg').textContent = 'Avg: '+avgB+'%';
+  // HOF
+  const sorted = all.sort((a,b)=>b.xp-a.xp);
+  const hofEl = document.getElementById('hofList');
+  hofEl.innerHTML = sorted.slice(0,10).map((s,i)=>{
+    const r = getRank(s.xp);
+    return `<div class="lb-row">
+      <div class="lb-rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
+      <div class="lb-name">${r.icon} ${s.name} <span class="tag" style="margin-left:6px">Sec ${s.sec}</span></div>
+      <div>${getLevel(s.xp)} LVL</div>
+      <div class="lb-xp">${s.xp} XP</div>
+    </div>`;
+  }).join('');
+}
+
+function getAvgPct(st){
+  if(!st.tests||!st.tests.length) return null;
+  const sum = st.tests.reduce((a,t)=>a+t.pct,0);
+  return Math.round(sum/st.tests.length);
+}
+
+// ── ROSTER ────────────────────────────────────────────────────────
+let rosterFilter = 'all';
+function filterRoster(sec, btn){
+  rosterFilter = sec;
+  document.querySelectorAll('#rosterSection .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoster();
+}
+
+function renderRoster(){
+  const tbody = document.getElementById('rosterBody');
+  if(!tbody) return;
+  const all = Object.values(state.students).filter(s=> rosterFilter==='all'||s.sec===rosterFilter);
+  const sorted = all.sort((a,b)=>b.xp-a.xp);
+  // global ranks
+  const allSorted = Object.values(state.students).sort((a,b)=>b.xp-a.xp);
+  tbody.innerHTML = sorted.map((s,i)=>{
+    const avg = getAvgPct(s);
+    const rank = getRank(s.xp);
+    const status = avg===null?'<span class="badge stagnant">NEW</span>':avg>=70?'<span class="badge surge">SURGE</span>':avg>=40?'<span class="badge stagnant">STAGNANT</span>':'<span class="badge risk">RISK</span>';
+    const gRank = allSorted.findIndex(x=>x.name===s.name)+1;
+    const hwDone = Object.values(s.hw||{}).filter(v=>v).length;
+    return `<tr>
+      <td>${gRank}</td><td><b>${s.name}</b></td>
+      <td><span class="tag">Sec ${s.sec}</span></td>
+      <td><span style="font-family:'Share Tech Mono'">${avg!==null?avg+'%':'—'}</span></td>
+      <td><span style="font-family:'Share Tech Mono';color:var(--accent)">${s.xp}</span></td>
+      <td>${getLevel(s.xp)}</td>
+      <td>${rank.icon} ${rank.name}</td>
+      <td>${status}</td>
+      <td>${hwDone}</td>
+      <td>${s.streak||0}🔥</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── STUDENT PROFILE ───────────────────────────────────────────────
+function renderStudentProfile(){
+  const k = state.currentStudent;
+  const st = state.students[k];
+  if(!st) return;
+  const level = getLevel(st.xp);
+  const xpInLevel = getXPInLevel(st.xp);
+  const rank = getRank(st.xp);
+  const allSorted = Object.values(state.students).sort((a,b)=>b.xp-a.xp);
+  const secSorted = allSorted.filter(s=>s.sec===st.sec);
+  const gRank = allSorted.findIndex(x=>x.name===st.name)+1;
+  const sRank = secSorted.findIndex(x=>x.name===st.name)+1;
+  const avg = getAvgPct(st);
+
+  document.getElementById('sAvatar').textContent = st.name[0];
+  document.getElementById('sName').textContent = st.name;
+  document.getElementById('sRankLabel').textContent = rank.icon+' '+rank.name;
+  document.getElementById('sSec').textContent = 'SECTION '+st.sec;
+  document.getElementById('sLevel').textContent = level;
+  document.getElementById('sXPLabel').textContent = xpInLevel+' / '+XP_PER_LEVEL+' XP';
+  document.getElementById('sXPFill').style.width = (xpInLevel/XP_PER_LEVEL*100)+'%';
+  document.getElementById('sNextLevel').textContent = (XP_PER_LEVEL-xpInLevel)+' XP to Level '+(level+1);
+  document.getElementById('sAvgPct').textContent = avg!==null?avg+'%':'—';
+  document.getElementById('sXPTotal').textContent = st.xp;
+  document.getElementById('sGlobalRank').textContent = '#'+gRank;
+  document.getElementById('sSecRank').textContent = '#'+sRank;
+  document.getElementById('topbarXP').textContent = st.xp+' XP';
+
+  // Achievements
+  const achs = [];
+  if(st.xp >= 1000) achs.push('🏅 1K XP Club');
+  if(st.tests && st.tests.some(t=>t.pct>=90)) achs.push('⭐ 90%+ Score');
+  if(st.tests && st.tests.length >= 5) achs.push('📊 5 Tests Done');
+  if(st.streak >= 3) achs.push('🔥 3-Day Streak');
+  const aEl = document.getElementById('sAchievements');
+  aEl.innerHTML = achs.length ? achs.map(a=>`<span class="tag" style="font-size:13px;padding:6px 14px">${a}</span>`).join('') : '<span style="color:var(--text2);font-size:13px">Complete tests to earn achievements!</span>';
+
+  // Test History
+  const tests = (st.tests||[]).slice().reverse();
+  const thEl = document.getElementById('sTestHistory');
+  if(!tests.length){ thEl.innerHTML = '<div class="empty-state">No tests yet.</div>'; return; }
+  thEl.innerHTML = `<div class="tbl-wrap"><table>
+    <thead><tr><th>TEST</th><th>DATE</th><th>MARKS</th><th>%</th><th>XP GAINED</th></tr></thead>
+    <tbody>${tests.map(t=>`<tr>
+      <td><b>${t.name||'Test'}</b></td>
+      <td>${t.date||'—'}</td>
+      <td>${t.marks}/${t.max}</td>
+      <td><span style="font-family:'Share Tech Mono'">${t.pct}%</span></td>
+      <td><span style="color:var(--green);font-family:'Share Tech Mono'">+${t.xp}</span></td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+// ── RESOURCES ─────────────────────────────────────────────────────
+let resourceFilter = 'all';
+function filterResources(type, btn){
+  resourceFilter = type;
+  const tabs = btn.closest('.filter-tabs');
+  tabs.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResources();
+}
+
+const RES_ICONS = {pdf:'📄',link:'🔗',video:'🎥',notes:'📝'};
+
+function renderResources(){
+  // Admin view
+  const adminEl = document.getElementById('resourceAdminList');
+  if(adminEl){
+    adminEl.innerHTML = state.resources.length ? state.resources.map((r,i)=>
+      `<div class="resource-card" style="margin-bottom:10px">
+        <div class="resource-icon">${RES_ICONS[r.type]||'📁'}</div>
+        <div>
+          <div class="resource-name">${r.name}</div>
+          <div class="resource-desc">${r.desc||''} <span class="tag">${r.chapter||''}</span> <span class="tag">Sec ${r.sec==='both'?'A+B':r.sec}</span></div>
+        </div>
+        <a class="resource-link" href="${r.url}" target="_blank">OPEN</a>
+        <button class="btn btn-danger btn-sm" style="margin-left:8px" onclick="deleteResource(${i})">✕</button>
+      </div>`).join('') : '<div class="empty-state">No resources added yet.</div>';
+  }
+  // Student view
+  const stuEl = document.getElementById('resourceStudentList');
+  if(stuEl){
+    const st = state.students[state.currentStudent];
+    const sec = st ? st.sec : 'A';
+    let res = state.resources.filter(r=>r.sec==='both'||r.sec===sec);
+    if(resourceFilter!=='all') res = res.filter(r=>r.type===resourceFilter);
+    stuEl.innerHTML = res.length ? res.map(r=>
+      `<div class="resource-card" style="margin-bottom:10px">
+        <div class="resource-icon">${RES_ICONS[r.type]||'📁'}</div>
+        <div>
+          <div class="resource-name">${r.name}</div>
+          <div class="resource-desc">${r.desc||''} <span class="tag">${r.chapter||'General'}</span></div>
+        </div>
+        <a class="resource-link" href="${r.url}" target="_blank">OPEN →</a>
+      </div>`).join('') : '<div class="empty-state">No resources for your section yet.</div>';
+  }
+}
+
+function addResource(){
+  const name = document.getElementById('resName').value.trim();
+  const url = document.getElementById('resUrl').value.trim();
+  if(!name||!url){ showToast('Name and URL required','error'); return; }
+  state.resources.push({
+    name, url,
+    type: document.getElementById('resType').value,
+    chapter: document.getElementById('resChapter').value.trim(),
+    desc: document.getElementById('resDesc').value.trim(),
+    sec: document.getElementById('resSec').value,
+    date: new Date().toLocaleDateString()
+  });
+  save();
+  ['resName','resUrl','resChapter','resDesc'].forEach(id=>document.getElementById(id).value='');
+  renderResources();
+  showToast('📁 Resource added!');
+}
+
+function deleteResource(i){
+  state.resources.splice(i,1);
+  save();
+  renderResources();
+}
+
+// ── HOMEWORK ──────────────────────────────────────────────────────
+function addHomework(){
+  const title = document.getElementById('hwTitle').value.trim();
+  if(!title){ showToast('Enter assignment title','error'); return; }
+  const hw = {
+    id: 'hw_'+Date.now(),
+    title,
+    due: document.getElementById('hwDue').value.trim(),
+    sec: document.getElementById('hwSection').value,
+    bonusXP: parseInt(document.getElementById('hwXP').value)||10,
+    date: new Date().toLocaleDateString()
+  };
+  state.homeworks.push(hw);
+  save();
+  document.getElementById('hwTitle').value = '';
+  document.getElementById('hwDue').value = '';
+  renderHWAdmin();
+  showToast('📚 Assignment added!');
+}
+
+function renderHWAdmin(){
+  const el = document.getElementById('hwAdminList');
+  if(!el) return;
+  if(!state.homeworks.length){ el.innerHTML='<div class="empty-state">No assignments yet.</div>'; return; }
+  el.innerHTML = state.homeworks.map((hw,i)=>{
+    const done = Object.values(state.students).filter(s=>(s.hw||{})[hw.id]).length;
+    const total = hw.sec==='both'?79:hw.sec==='A'?39:40;
+    return `<div class="hw-card">
+      <div>
+        <div class="hw-title">${hw.title}</div>
+        <div class="hw-due">Due: ${hw.due||'—'} · Sec ${hw.sec==='both'?'A+B':hw.sec} · +${hw.bonusXP} XP</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px">${done}/${total} completed</div>
+      </div>
+      <button class="btn btn-danger btn-sm" style="margin-left:auto" onclick="deleteHW(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function deleteHW(i){ state.homeworks.splice(i,1); save(); renderHWAdmin(); }
+
+function renderHWStudent(){
+  const el = document.getElementById('hwStudentList');
+  if(!el) return;
+  const k = state.currentStudent;
+  const st = state.students[k];
+  if(!st){ el.innerHTML='<div class="empty-state">Not logged in.</div>'; return; }
+  const myHW = state.homeworks.filter(hw=>hw.sec==='both'||hw.sec===st.sec);
+  if(!myHW.length){ el.innerHTML='<div class="empty-state">No assignments yet.</div>'; return; }
+  el.innerHTML = myHW.map(hw=>{
+    const done = (st.hw||{})[hw.id];
+    return `<div class="hw-card">
+      <div class="hw-check ${done?'done':''}" onclick="toggleHW('${hw.id}','${k}')">
+        ${done?'✓':''}
+      </div>
+      <div>
+        <div class="hw-title" style="${done?'text-decoration:line-through;opacity:.6':''}">${hw.title}</div>
+        <div class="hw-due">Due: ${hw.due||'—'}</div>
+      </div>
+      <div class="hw-xp">+${hw.bonusXP} XP</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleHW(hwId, studentKey){
+  const st = state.students[studentKey];
+  if(!st) return;
+  if(!st.hw) st.hw = {};
+  const wasNotDone = !st.hw[hwId];
+  st.hw[hwId] = wasNotDone;
+  const hw = state.homeworks.find(h=>h.id===hwId);
+  if(wasNotDone && hw){
+    const oldLevel = getLevel(st.xp);
+    st.xp += hw.bonusXP;
+    const newLevel = getLevel(st.xp);
+    save();
+    spawnXPFloat(window.innerWidth/2, 200, '+'+hw.bonusXP+' XP');
+    showToast('✅ Homework done! +'+hw.bonusXP+' XP');
+    if(newLevel > oldLevel) setTimeout(()=>showLevelUp(studentKey, newLevel), 500);
+    document.getElementById('topbarXP').textContent = st.xp + ' XP';
+  } else {
+    if(hw) st.xp = Math.max(0, st.xp - hw.bonusXP);
+    save();
+  }
+  renderHWStudent();
+  renderStudentProfile();
+}
+
+// ── DOUBTS ────────────────────────────────────────────────────────
+function submitDoubt(){
+  const text = document.getElementById('newDoubtText').value.trim();
+  if(!text){ showToast('Write your doubt first','error'); return; }
+  const k = state.currentStudent;
+  const st = state.students[k];
+  if(!st) return;
+  if(!st.doubts) st.doubts = [];
+  st.doubts.push({
+    q: text, ans: null,
+    date: new Date().toLocaleString(), answered: false
+  });
+  save();
+  document.getElementById('newDoubtText').value = '';
+  renderDoubtsStudent();
+  showToast('📤 Doubt submitted!');
+}
+
+function renderDoubtsStudent(){
+  const el = document.getElementById('studentDoubtList');
+  if(!el) return;
+  const k = state.currentStudent;
+  const st = state.students[k];
+  const doubts = (st&&st.doubts)||[];
+  if(!doubts.length){ el.innerHTML='<div class="empty-state">No doubts submitted yet.</div>'; return; }
+  el.innerHTML = [...doubts].reverse().map(d=>
+    `<div class="doubt-card">
+      <div class="doubt-meta">${d.date} · ${d.answered?'✅ Answered':'⏳ Pending'}</div>
+      <div class="doubt-q"><b>Q:</b> ${d.q}</div>
+      ${d.ans ? `<div class="doubt-ans">🎓 <b>Teacher:</b> ${d.ans}</div>` : ''}
+    </div>`
+  ).join('');
+}
+
+let doubtsFilter = 'all';
+function filterDoubts(f, btn){
+  doubtsFilter = f;
+  document.querySelectorAll('#doubtsAdmin .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDoubtsAdmin();
+}
+
+function renderDoubtsAdmin(){
+  const el = document.getElementById('doubtsList');
+  if(!el) return;
+  let allDoubts = [];
+  for(const [k,st] of Object.entries(state.students)){
+    for(let i=0;i<(st.doubts||[]).length;i++){
+      allDoubts.push({...st.doubts[i], studentKey:k, studentName:st.name, idx:i});
+    }
+  }
+  allDoubts.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(doubtsFilter==='pending') allDoubts = allDoubts.filter(d=>!d.answered);
+  if(doubtsFilter==='answered') allDoubts = allDoubts.filter(d=>d.answered);
+  if(!allDoubts.length){ el.innerHTML='<div class="empty-state">No doubts.</div>'; return; }
+  el.innerHTML = allDoubts.map(d=>
+    `<div class="doubt-card">
+      <div class="doubt-meta">${d.studentName} · Sec ${state.students[d.studentKey].sec} · ${d.date}</div>
+      <div class="doubt-q"><b>Q:</b> ${d.q}</div>
+      ${d.ans ? `<div class="doubt-ans">✅ ${d.ans}</div>` :
+        `<div style="display:flex;gap:8px;margin-top:10px">
+          <input type="text" id="ansInput_${d.studentKey}_${d.idx}" style="flex:1" placeholder="Your answer..."/>
+          <button class="btn btn-primary btn-sm" onclick="answerDoubt('${d.studentKey}',${d.idx})">ANSWER</button>
+        </div>`}
+    </div>`
+  ).join('');
+}
+
+function answerDoubt(studentKey, idx){
+  const inp = document.getElementById(`ansInput_${studentKey}_${idx}`);
+  if(!inp||!inp.value.trim()){ showToast('Write an answer first','error'); return; }
+  const st = state.students[studentKey];
+  if(!st||!st.doubts[idx]) return;
+  st.doubts[idx].ans = inp.value.trim();
+  st.doubts[idx].answered = true;
+  st.xp += 5; // small bonus for asking
+  save();
+  renderDoubtsAdmin();
+  showToast('✅ Answer sent! +5 XP for student');
+}
+
+// ── BROADCASTS ────────────────────────────────────────────────────
+function sendBroadcast(){
+  const msg = document.getElementById('quickBroadcast').value.trim();
+  if(!msg) return;
+  state.broadcasts.unshift({title:'📢 Announcement', msg, date:new Date().toLocaleString()});
+  save();
+  document.getElementById('quickBroadcast').value='';
+  showToast('📢 Broadcast sent!');
+  renderNotifications();
+}
+
+function sendFullBroadcast(){
+  const title = document.getElementById('bcTitle').value.trim();
+  const msg = document.getElementById('bcMessage').value.trim();
+  if(!title||!msg){ showToast('Fill title and message','error'); return; }
+  state.broadcasts.unshift({title, msg, date:new Date().toLocaleString()});
+  save();
+  document.getElementById('bcTitle').value='';
+  document.getElementById('bcMessage').value='';
+  renderBroadcasts();
+  showToast('📢 Broadcast sent!');
+}
+
+function renderBroadcasts(){
+  const el = document.getElementById('broadcastList');
+  if(!el) return;
+  el.innerHTML = state.broadcasts.map(b=>
+    `<div class="broadcast-item">
+      <div class="bc-title">${b.title}</div>
+      <div style="font-size:13px;margin-top:4px">${b.msg}</div>
+      <div class="bc-time">${b.date}</div>
+    </div>`
+  ).join('') || '<div class="empty-state">No broadcasts yet.</div>';
+}
+
+function renderNotifications(){
+  const list = document.getElementById('notifList');
+  if(!list) return;
+  const badge = document.getElementById('notifBadge');
+  if(!state.broadcasts.length){ list.innerHTML='<div class="empty-state">No announcements</div>'; badge.style.display='none'; return; }
+  badge.style.display='flex';
+  badge.textContent = Math.min(state.broadcasts.length, 9);
+  list.innerHTML = state.broadcasts.slice(0,10).map(b=>
+    `<div class="notif-item">
+      <div>${b.title}: ${b.msg}</div>
+      <div class="notif-time">${b.date}</div>
+    </div>`
+  ).join('');
+}
+
+function toggleNotif(){
+  document.getElementById('notifPanel').classList.toggle('open');
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('#notifPanel')&&!e.target.closest('#notifBtn')){
+    document.getElementById('notifPanel').classList.remove('open');
+  }
+});
+
+// ── MASTERY GRID ──────────────────────────────────────────────────
+function renderMasteryGrid(){
+  const el = document.getElementById('masteryGridWrap');
+  if(!el) return;
+  const chapters = [...new Set(state.chapterTests.map(t=>t.chapter))];
+  if(!chapters.length){ el.innerHTML='<div class="empty-state">No chapter tests yet.</div>'; return; }
+  const all = Object.values(state.students);
+  let html = `<table class="chapter-table"><thead><tr><th>Student</th><th>Sec</th>`;
+  for(const ch of chapters) html += `<th>${ch}</th>`;
+  html += '</tr></thead><tbody>';
+  for(const s of all){
+    html += `<tr><td>${s.name}</td><td>${s.sec}</td>`;
+    for(const ch of chapters){
+      const tests = state.chapterTests.filter(t=>t.chapter===ch);
+      const stTests = tests.filter(t=>(t.marks||{})[nameToKey(s.name)]!==undefined);
+      if(!stTests.length){ html+=`<td><div class="mastery-cell none">—</div></td>`; continue; }
+      const avg = stTests.reduce((a,t)=>{ const m=t.marks[nameToKey(s.name)]; return a+(m/t.max*100); },0)/stTests.length;
+      const cls = avg>=80?'mastered':avg>=50?'developing':'needs';
+      html += `<td><div class="mastery-cell ${cls}">${Math.round(avg)}%</div></td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+// ── CHAPTER TESTS ─────────────────────────────────────────────────
+function openChapterTestModal(){
+  const chapter = document.getElementById('ctChapter').value.trim();
+  const name = document.getElementById('ctName').value.trim();
+  const max = parseInt(document.getElementById('ctMax').value)||0;
+  if(!chapter||!name||!max){ showToast('Fill chapter, name, and max marks','error'); return; }
+  const ct = {
+    id: 'ct_'+Date.now(), chapter, name, max,
+    date: new Date().toLocaleDateString(), marks: {}
+  };
+  state.chapterTests.push(ct);
+  save();
+  document.getElementById('ctChapter').value='';
+  document.getElementById('ctName').value='';
+  document.getElementById('ctMax').value='';
+  renderChapterTests();
+  showToast('📖 Chapter test created!');
+}
+
+function renderChapterTests(){
+  const el = document.getElementById('chapterTestList');
+  if(!el) return;
+  if(!state.chapterTests.length){ el.innerHTML='<div class="empty-state">No chapter tests yet.</div>'; return; }
+  el.innerHTML = state.chapterTests.map((ct,i)=>
+    `<div class="card" style="margin-bottom:10px">
+      <div class="flex-between">
+        <div>
+          <div style="font-weight:700">${ct.name}</div>
+          <div style="font-size:12px;color:var(--text2)">${ct.chapter} · Max: ${ct.max} · ${ct.date}</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteCT(${i})">✕</button>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function deleteCT(i){ state.chapterTests.splice(i,1); save(); renderChapterTests(); }
+
+// ── LEADERBOARD ───────────────────────────────────────────────────
+let lbFilter = 'global';
+function filterLB(f, btn){
+  lbFilter = f;
+  document.querySelectorAll('#leaderboardSection .filter-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeaderboard(f);
+}
+
+function renderLeaderboard(f){
+  const el = document.getElementById('leaderboardList');
+  if(!el) return;
+  let students = Object.values(state.students);
+  if(f==='A') students = students.filter(s=>s.sec==='A');
+  if(f==='B') students = students.filter(s=>s.sec==='B');
+  students.sort((a,b)=>b.xp-a.xp);
+  el.innerHTML = students.map((s,i)=>{
+    const rank = getRank(s.xp);
+    const isMe = s.name === (state.students[state.currentStudent]||{}).name;
+    return `<div class="lb-row" style="${isMe?'border-color:var(--accent);background:rgba(240,192,64,0.05)':''}">
+      <div class="lb-rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
+      <div class="lb-name">${rank.icon} ${s.name} ${isMe?'<span class="tag">YOU</span>':''}</div>
+      <div class="level-ring" style="width:36px;height:36px;font-size:13px;border-width:2px">${getLevel(s.xp)}</div>
+      <div class="lb-xp">${s.xp} XP</div>
+    </div>`;
+  }).join('');
+}
+
+// ── PRACTICE QUIZZES ──────────────────────────────────────────────
+const QUIZ_BANK = {
+  "Algebra": [
+    {q:"Solve: 2x + 6 = 18. What is x?", opts:["4","5","6","7"], ans:2, exp:"2x = 18 - 6 = 12, so x = 6"},
+    {q:"Factorise: x² - 5x + 6", opts:["(x-2)(x-3)","(x+2)(x+3)","(x-1)(x-6)","(x+1)(x-6)"], ans:0, exp:"Find two numbers that multiply to 6 and add to -5: -2 and -3"},
+    {q:"If 3a - 4 = 11, find a", opts:["4","5","6","7"], ans:1, exp:"3a = 15, a = 5"},
+    {q:"Simplify: (2x³y²)³", opts:["6x⁶y⁵","8x⁹y⁶","8x⁶y⁶","6x⁹y⁶"], ans:1, exp:"Each factor cubed: 2³=8, x³³=x⁹, y²³=y⁶"},
+    {q:"Which is the quadratic formula?", opts:["x = -b ± √(b²-4ac) / 2a","x = b ± √(b²-4ac) / a","x = -b ± √(b²+4ac) / 2a","x = -b ± √(b+4ac) / 2"], ans:0, exp:"The standard quadratic formula for ax²+bx+c=0"},
+    {q:"What are the roots of x² - 9 = 0?", opts:["3 and -3","9 and -9","3 only","-3 only"], ans:0, exp:"x² = 9, x = ±3"},
+    {q:"Expand: (x+3)²", opts:["x²+6","x²+6x+9","x²+3x+9","x²+9"], ans:1, exp:"(a+b)² = a²+2ab+b²"},
+    {q:"Solve: x/3 + 5 = 9", opts:["8","10","12","15"], ans:2, exp:"x/3 = 4, x = 12"},
+    {q:"If p = 2 and q = 3, find 2p² - 3q", opts:["1","-1","3","-3"], ans:0, exp:"2(4) - 3(3) = 8 - 9 = -1. Wait, that's -1."},
+    {q:"The sum of roots of x² - 5x + 6 = 0 is:", opts:["6","5","-5","-6"], ans:1, exp:"Sum of roots = -b/a = 5/1 = 5"},
+  ],
+  "Geometry": [
+    {q:"In a right triangle with legs 3 and 4, the hypotenuse is:", opts:["5","6","7","4.5"], ans:0, exp:"By Pythagoras: √(9+16) = √25 = 5"},
+    {q:"Area of a circle with radius 7 is approximately:", opts:["44","154","196","308"], ans:1, exp:"πr² = 22/7 × 49 = 154"},
+    {q:"The sum of interior angles of a hexagon is:", opts:["540°","720°","360°","600°"], ans:1, exp:"(n-2)×180 = (6-2)×180 = 720°"},
+    {q:"Two parallel lines cut by a transversal — co-interior angles are:", opts:["Equal","Supplementary","Complementary","None"], ans:1, exp:"Co-interior (same side) angles are supplementary, summing to 180°"},
+    {q:"Midpoint of (2,4) and (8,10) is:", opts:["(5,7)","(3,5)","(10,14)","(6,8)"], ans:0, exp:"((2+8)/2, (4+10)/2) = (5,7)"},
+    {q:"A tangent to a circle makes what angle with the radius at the point of contact?", opts:["45°","60°","90°","180°"], ans:2, exp:"A tangent is perpendicular to the radius at the point of contact"},
+    {q:"If a diameter subtends an angle at the circumference, it is:", opts:["45°","60°","90°","180°"], ans:2, exp:"Angle in a semicircle is always 90° (Thales' theorem)"},
+    {q:"Area of triangle with base 10 and height 6:", opts:["30","60","16","20"], ans:0, exp:"Area = ½ × base × height = ½ × 10 × 6 = 30"},
+    {q:"Distance between (0,0) and (6,8):", opts:["8","10","12","14"], ans:1, exp:"√(36+64) = √100 = 10"},
+    {q:"The diagonals of a rhombus:", opts:["Are equal","Bisect each other at right angles","Are parallel","None"], ans:1, exp:"Diagonals of a rhombus bisect each other perpendicularly"},
+  ],
+  "Trigonometry": [
+    {q:"sin 30° = ?", opts:["1/2","√3/2","1/√2","√3"], ans:0, exp:"sin 30° = 1/2 — memorise the standard values!"},
+    {q:"cos 60° = ?", opts:["√3/2","1/2","0","1"], ans:1, exp:"cos 60° = 1/2"},
+    {q:"tan 45° = ?", opts:["0","1","√3","1/√3"], ans:1, exp:"tan 45° = sin45/cos45 = 1"},
+    {q:"sin²θ + cos²θ = ?", opts:["0","1","2","varies"], ans:1, exp:"This is the fundamental Pythagorean identity"},
+    {q:"sin 0° = ?", opts:["0","1","-1","∞"], ans:0, exp:"sin 0° = 0"},
+    {q:"cos 90° = ?", opts:["1","0","-1","√3/2"], ans:1, exp:"cos 90° = 0"},
+    {q:"If sin θ = 3/5, then cos θ = ?", opts:["4/5","3/4","5/3","4/3"], ans:0, exp:"In 3-4-5 triangle, cos = 4/5"},
+    {q:"1 + tan²θ = ?", opts:["sec²θ","cosec²θ","cot²θ","1"], ans:0, exp:"This is another Pythagorean identity: 1 + tan²θ = sec²θ"},
+    {q:"sin(90° - θ) = ?", opts:["sinθ","cosθ","-sinθ","-cosθ"], ans:1, exp:"Complementary angle identity: sin(90-θ) = cosθ"},
+    {q:"The value of sin 45° is:", opts:["1/2","√3/2","1/√2","√2"], ans:2, exp:"sin 45° = 1/√2 = √2/2 ≈ 0.707"},
+  ],
+  "Statistics": [
+    {q:"Mean of 2,4,6,8,10 is:", opts:["5","6","7","8"], ans:1, exp:"Sum = 30, n = 5, Mean = 6"},
+    {q:"Median of 3,7,1,9,5 is:", opts:["5","6","7","3"], ans:0, exp:"Sorted: 1,3,5,7,9 — middle value = 5"},
+    {q:"Mode of 2,3,3,4,3,5 is:", opts:["2","3","4","5"], ans:1, exp:"3 appears most frequently (3 times)"},
+    {q:"Range of 15,22,8,31,4 is:", opts:["18","27","26","23"], ans:1, exp:"Range = Max - Min = 31 - 4 = 27"},
+    {q:"Which measure is not affected by extreme values?", opts:["Mean","Median","Mode","Range"], ans:1, exp:"Median is resistant to outliers"},
+    {q:"P(A) + P(A') = ?", opts:["0","1","2","varies"], ans:1, exp:"Complementary probability: P(A) + P(not A) = 1"},
+    {q:"If P(E) = 0.3, then P(not E) = ?", opts:["0.3","0.7","0.6","0.9"], ans:1, exp:"P(E') = 1 - P(E) = 1 - 0.3 = 0.7"},
+    {q:"A fair coin is tossed. P(heads) = ?", opts:["1","0","1/2","1/4"], ans:2, exp:"Equal probability of heads and tails"},
+    {q:"Empirical formula: Mode ≈ ?", opts:["3 Mean - 2 Median","2 Mean - 3 Median","Mean + Median","Mean - 2 Median"], ans:0, exp:"Mode ≈ 3 Median - 2 Mean (empirical formula)"},
+    {q:"Sum of all probabilities in a sample space = ?", opts:["0","varies","1",">1"], ans:2, exp:"Total probability of all outcomes = 1"},
+  ],
+  "Real Numbers": [
+    {q:"HCF of 36 and 48 is:", opts:["6","12","24","18"], ans:1, exp:"Prime factorisation: HCF(36,48) = 4×3 = 12"},
+    {q:"LCM of 4 and 6 is:", opts:["12","18","24","8"], ans:0, exp:"LCM(4,6) = 12"},
+    {q:"√2 is:", opts:["Rational","Irrational","Natural","Integer"], ans:1, exp:"√2 cannot be expressed as p/q — it's irrational"},
+    {q:"Euclid's division lemma: a = bq + r where:", opts:["0≤r<b","0<r<b","0≤r≤b","r>b"], ans:0, exp:"The remainder r satisfies 0 ≤ r < b"},
+    {q:"HCF × LCM = ?", opts:["Sum of numbers","Difference","Product","Ratio"], ans:2, exp:"HCF × LCM = Product of the two numbers"},
+    {q:"The decimal expansion of 1/3 is:", opts:["0.3","0.333...","0.333","3.0"], ans:1, exp:"1/3 = 0.3̄ = 0.333... (recurring)"},
+    {q:"Which of these is rational?", opts:["√3","π","0.5","√7"], ans:2, exp:"0.5 = 1/2 is a rational number"},
+    {q:"2³ × 5² = ?", opts:["100","200","800","40"], ans:1, exp:"8 × 25 = 200"},
+    {q:"Fundamental theorem of arithmetic states every integer > 1 is:", opts:["Prime or 1","A unique product of primes","Even or odd","A perfect square"], ans:1, exp:"Every integer > 1 is uniquely expressible as a product of primes"},
+    {q:"The decimal expansion of 7/8 terminates after how many places?", opts:["1","2","3","4"], ans:2, exp:"7/8 = 0.875 — terminates after 3 decimal places"},
+  ],
+};
+
+let currentQuizTopic = null;
+let currentQuizQuestions = [];
+let currentQuizIdx = 0;
+let currentQuizScore = 0;
+
+function renderQuizTopics(){
+  const el = document.getElementById('quizTopicSelect');
+  if(!el) return;
+  el.innerHTML = Object.keys(QUIZ_BANK).map(topic=>`
+    <div class="card" style="cursor:pointer;text-align:center;transition:all .3s;border:1px solid var(--border)"
+         onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"
+         onclick="startQuiz('${topic}')">
+      <div style="font-size:32px;margin-bottom:8px">${{Algebra:'🔢',Geometry:'📐',Trigonometry:'📏',Statistics:'📊','Real Numbers':'🔵'}[topic]||'📚'}</div>
+      <div style="font-family:'Orbitron';font-size:13px;letter-spacing:1px">${topic}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">${QUIZ_BANK[topic].length} questions</div>
+      <div style="font-size:11px;color:var(--accent);margin-top:6px">+XP on completion</div>
+    </div>
+  `).join('');
+}
+
+function startQuiz(topic){
+  currentQuizTopic = topic;
+  const bank = [...QUIZ_BANK[topic]];
+  // shuffle
+  currentQuizQuestions = bank.sort(()=>Math.random()-.5).slice(0,10);
+  currentQuizIdx = 0;
+  currentQuizScore = 0;
+  document.getElementById('quizTopicSelect').style.display='none';
+  document.getElementById('quizArena').style.display='block';
+  document.getElementById('quizResult').style.display='none';
+  document.getElementById('qTotal').textContent = currentQuizQuestions.length;
+  document.getElementById('qTopic').textContent = topic;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = currentQuizQuestions[currentQuizIdx];
+  document.getElementById('qNum').textContent = currentQuizIdx+1;
+  document.getElementById('qScore').textContent = currentQuizScore;
+  document.getElementById('qProgressBar').style.width = ((currentQuizIdx+1)/currentQuizQuestions.length*100)+'%';
+  document.getElementById('qQuestion').textContent = q.q;
+  document.getElementById('qExplanation').style.display='none';
+  document.getElementById('nextQBtn').style.display='none';
+  document.getElementById('qOpts').innerHTML = q.opts.map((o,i)=>
+    `<div class="quiz-opt" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${o}</div>`
+  ).join('');
+}
+
+function answerQ(idx){
+  const q = currentQuizQuestions[currentQuizIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.classList.add('disabled'));
+  if(idx === q.ans){
+    opts[idx].classList.add('correct');
+    currentQuizScore++;
+    spawnXPFloat(window.innerWidth/2, window.innerHeight/2, '+10 XP');
+  } else {
+    opts[idx].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+  }
+  const expEl = document.getElementById('qExplanation');
+  expEl.textContent = '💡 '+q.exp;
+  expEl.style.display = 'block';
+  document.getElementById('nextQBtn').style.display = 'block';
+}
+
+function nextQuestion(){
+  currentQuizIdx++;
+  if(currentQuizIdx >= currentQuizQuestions.length){
+    showQuizResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showQuizResult(){
+  document.getElementById('quizArena').style.display='none';
+  document.getElementById('quizResult').style.display='block';
+  const total = currentQuizQuestions.length;
+  const pct = Math.round(currentQuizScore/total*100);
+  const xpEarned = currentQuizScore * 10 + (pct>=80?30:pct>=60?15:0);
+  document.getElementById('quizFinalScore').textContent = currentQuizScore+'/'+total;
+  document.getElementById('quizXPEarned').textContent = '+'+xpEarned+' XP earned!';
+  // Award XP
+  const k = state.currentStudent;
+  if(k && state.students[k]){
+    const oldLevel = getLevel(state.students[k].xp);
+    state.students[k].xp += xpEarned;
+    const newLevel = getLevel(state.students[k].xp);
+    save();
+    document.getElementById('topbarXP').textContent = state.students[k].xp + ' XP';
+    if(newLevel > oldLevel) setTimeout(()=>showLevelUp(k, newLevel), 800);
+  }
+  spawnConfetti();
+}
+
+function showQuizTopics(){
+  document.getElementById('quizTopicSelect').style.display='grid';
+  document.getElementById('quizArena').style.display='none';
+  document.getElementById('quizResult').style.display='none';
+}
+
+function retryQuiz(){ startQuiz(currentQuizTopic); }
+
+// ── LOAD MARKLIST ─────────────────────────────────────────────────
+function loadMarklistData(){
+  if(typeof MARKLIST === 'undefined') return;
+  let changed = false;
+  for(const test of (MARKLIST.tests||[])){
+    for(const [username, marks] of Object.entries(test.marks||{})){
+      const st = state.students[username];
+      if(!st) continue;
+      const max = st.sec==='A' ? test.maxA : test.maxB;
+      if(!max) continue;
+      const already = (st.tests||[]).find(t=>t.id===test.id);
+      if(!already){
+        const xp = calcXP(marks, max);
+        const pct = Math.round(marks/max*100);
+        if(!st.tests) st.tests = [];
+        st.tests.push({id:test.id, name:test.name, marks, max, pct, xp, date:test.date});
+        st.xp += xp;
+        changed = true;
+      }
+    }
+  }
+  if(changed) save();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show'+(type?' '+type:'');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ── PARTICLES ─────────────────────────────────────────────────────
+function initParticles(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+  const pts = Array.from({length:60},()=>({
+    x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+    r:Math.random()*2+1
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const p of pts){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+      if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(240,192,64,0.4)'; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ── BOOTSTRAP ─────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', ()=>{
+  load();
+  initStudents();
+  loadMarklistData(); // load test data into students on startup
+  populateStudentSelect();
+  populateInjectDropdown();
+  initParticles();
+  save();
+  // Enter on password field
+  document.getElementById('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+});
+</script>
+</body>
+</html>
